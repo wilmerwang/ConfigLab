@@ -1,0 +1,9 @@
+# @package _global_
+
+task_name: predict
+
+train: false
+test: false
+predict: true
+
+ckpt_path: null

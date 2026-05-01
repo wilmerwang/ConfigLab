@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - override /logger: csv
+
+task_name: train
+
+train: true
+test: true
+predict: false
+
+trainer:
+  max_epochs: 5

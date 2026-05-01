@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - data: mnist
+  - model: lit_mnist
+  - encoder: cnn # The component of model.
+  - head: mlp # The component of model.
+  - callbacks: default
+  - logger: null
+  - trainer: default
+  - paths: default
+  - hydra: default
+
+  - task: null
+  - experiment: null
+  - hparams_search: null
+  - debug: null
+
+task_name: "train"
+tags: ["dev"]
+
+train: false
+test: false
+predict: false
+
+ckpt_path: null
+seed: 68
