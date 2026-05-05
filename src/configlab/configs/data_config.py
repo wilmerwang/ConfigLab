@@ -4,15 +4,6 @@ from hydra.core.config_store import ConfigStore
 
 
 @dataclass
-class DataPrepareConfig:
-    """Data preparation configuration object that contains all the necessary information for data preparation."""
-
-    _target_: str = "configlab.data.data_prepare.mnist_prepare"
-    _partial_: bool = True
-    root: str = "data"
-
-
-@dataclass
 class DataConfig:
     """Data configuration object that contains all the necessary information of the data."""
 
