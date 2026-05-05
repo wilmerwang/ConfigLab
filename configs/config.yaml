@@ -4,8 +4,8 @@ defaults:
   - _self_
   - data: mnist
   - model: lit_mnist
-  - encoder: cnn # The component of model.
-  - head: mlp # The component of model.
+  - model/encoder: cnn # The component of model.
+  - model/head: mlp # The component of model.
   - callbacks: default
   - logger: null
   - trainer: default

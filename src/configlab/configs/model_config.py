@@ -38,14 +38,14 @@ class LitMNISTConfig(TargetConfig):
     """Configuration for the LitMNIST model."""
 
     _target_: str = "configlab.models.mnist_modelmodule.LitMNIST"
-    encoder: Any = "${encoder}"
-    head: Any = "${head}"
+    encoder: Any = "${model.encoder}"
+    head: Any = "${model.head}"
 
 
 def register_model_configs() -> None:
     """Register models in the config."""
     cs = ConfigStore.instance()
-    cs.store(group="encoder", name="cnn", node=CNNEncoderConfig)
-    cs.store(group="encoder", name="mlp", node=MLPEncoderConfig)
-    cs.store(group="head", name="mlp", node=MLPHeadConfig)
+    cs.store(group="model/encoder", name="cnn", node=CNNEncoderConfig)
+    cs.store(group="model/encoder", name="mlp", node=MLPEncoderConfig)
+    cs.store(group="model/head", name="mlp", node=MLPHeadConfig)
     cs.store(group="model", name="lit_mnist", node=LitMNISTConfig)
