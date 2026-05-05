@@ -18,11 +18,8 @@ def run_pipeline(config: DictConfig) -> dict[str, Any]:
     # capture git info
     snapshot_git_state(output_dir=Path(config.paths.output_dir) / "git_snapshot", cwd=Path(config.paths.root_dir))
 
-    # prepare data
-    train, test = mnist_prepare(config.paths.data_dir)
-
     # data module
-    data_module = build_data_module(config, train_dataset=train, test_dataset=test)
+    data_module = build_data_module(config)
 
     # model module
     model_module = build_model_module(config)

@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 from lightning import LightningDataModule
 from torch.utils.data import DataLoader, Dataset, random_split
 
@@ -7,8 +9,7 @@ class MNISTDataModule(LightningDataModule):
 
     def __init__(
         self,
-        train_dataset: Dataset,
-        test_dataset: Dataset,
+        data_prepare_func: Callable[[], tuple[Dataset, Dataset]],
         batch_size: int = 64,
         num_workers: int = 0,
         pin_memory: bool = False,
@@ -16,8 +17,7 @@ class MNISTDataModule(LightningDataModule):
     ) -> None:
         """Initialize the MNISTDataModule with the given datasets and parameters."""
         super().__init__()
-        self.train_dataset = train_dataset
-        self.test_dataset = test_dataset
+        self.train_dataset, self.test_dataset = data_prepare_func()
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.pin_memory = pin_memory

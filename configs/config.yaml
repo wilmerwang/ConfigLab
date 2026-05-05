@@ -3,9 +3,10 @@
 defaults:
   - _self_
   - data: mnist
+  - data/data_prepare_func: default
   - model: lit_mnist
-  - model/encoder: cnn # The component of model.
-  - model/head: mlp # The component of model.
+  - model/encoder: cnn
+  - model/head: mlp
   - callbacks: default
   - logger: null
   - trainer: default
