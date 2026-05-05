@@ -3,7 +3,6 @@
 defaults:
   - _self_
   - data: mnist
-  - data/data_prepare_func: default
   - model: lit_mnist
   - model/encoder: cnn
   - model/head: mlp

@@ -5,9 +5,9 @@ from lightning.pytorch.loggers import Logger
 from omegaconf import DictConfig
 
 
-def build_data_module(config: DictConfig) -> LightningDataModule:
+def build_data_module(config: DictConfig, **kwargs) -> LightningDataModule:
     """Build the data module from the configuration."""
-    return instantiate(config.data)
+    return instantiate(config.data, **kwargs)
 
 
 def build_model_module(config: DictConfig, **kwargs) -> LightningModule:

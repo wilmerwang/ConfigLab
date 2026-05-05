@@ -10,11 +10,7 @@ def test_dataloaders(
     train_dataset: Dataset, test_dataset: Dataset, batch_size: int, batch_size_expected: int, loader_name: str
 ) -> None:
     """Test the dataloaders of the MNISTDataModule."""
-
-    def data_prepare_func() -> tuple[Dataset, Dataset]:
-        return train_dataset, test_dataset
-
-    dm = MNISTDataModule(data_prepare_func, batch_size=batch_size, num_workers=0, pin_memory=False)
+    dm = MNISTDataModule(train_dataset, test_dataset, batch_size=batch_size, num_workers=0, pin_memory=False)
     dm.setup()
 
     assert dm.num_classes == 10

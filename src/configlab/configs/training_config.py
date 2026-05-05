@@ -3,12 +3,10 @@ from dataclasses import dataclass, field
 
 from hydra.core.config_store import ConfigStore
 
-from .base import TargetConfig
-
 
 # --- Callbacks ---
 @dataclass
-class ModelCheckpointConfig(TargetConfig):
+class ModelCheckpointConfig:
     """Configuration for model checkpointing."""
 
     _target_: str = "lightning.pytorch.callbacks.ModelCheckpoint"
@@ -28,7 +26,7 @@ class ModelCheckpointConfig(TargetConfig):
 
 
 @dataclass
-class EarlyStoppingConfig(TargetConfig):
+class EarlyStoppingConfig:
     """Configuration for early stopping."""
 
     _target_: str = "lightning.pytorch.callbacks.EarlyStopping"
@@ -45,7 +43,7 @@ class EarlyStoppingConfig(TargetConfig):
 
 
 @dataclass
-class ModelSummaryConfig(TargetConfig):
+class ModelSummaryConfig:
     """Configuration for model summary."""
 
     _target_: str = "lightning.pytorch.callbacks.RichModelSummary"
@@ -53,7 +51,7 @@ class ModelSummaryConfig(TargetConfig):
 
 
 @dataclass
-class RichProgressBarConfig(TargetConfig):
+class RichProgressBarConfig:
     """Configuration for rich progress bar."""
 
     _target_: str = "lightning.pytorch.callbacks.RichProgressBar"
@@ -86,7 +84,7 @@ def register_callbacks() -> None:
 
 # --- Loggers ---
 @dataclass
-class CSVLoggerConfig(TargetConfig):
+class CSVLoggerConfig:
     """Configuration for CSVLogger."""
 
     _target_: str = "lightning.pytorch.loggers.csv_logs.CSVLogger"
@@ -96,7 +94,7 @@ class CSVLoggerConfig(TargetConfig):
 
 
 @dataclass
-class WandbLoggerConfig(TargetConfig):
+class WandbLoggerConfig:
     """Configuration for WandbLogger."""
 
     _target_: str = "lightning.pytorch.loggers.wandb.WandbLogger"
@@ -137,7 +135,7 @@ def register_loggers() -> None:
 
 # --- Trainer ---
 @dataclass
-class BaseTrainerConfig(TargetConfig):
+class BaseTrainerConfig:
     """Base trainer config."""
 
     _target_: str = "lightning.Trainer"

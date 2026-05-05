@@ -3,11 +3,9 @@ from typing import Any
 
 from hydra.core.config_store import ConfigStore
 
-from .base import TargetConfig
-
 
 @dataclass
-class CNNEncoderConfig(TargetConfig):
+class CNNEncoderConfig:
     """Configuration for the CNN encoder."""
 
     _target_: str = "configlab.models.comps.encoder.CNNEncoder"
@@ -15,7 +13,7 @@ class CNNEncoderConfig(TargetConfig):
 
 
 @dataclass
-class MLPEncoderConfig(TargetConfig):
+class MLPEncoderConfig:
     """Configuration for the MLP encoder."""
 
     _target_: str = "configlab.models.comps.encoder.MLPEncoder"
@@ -25,7 +23,7 @@ class MLPEncoderConfig(TargetConfig):
 
 
 @dataclass
-class MLPHeadConfig(TargetConfig):
+class MLPHeadConfig:
     """Configuration for the head."""
 
     _target_: str = "configlab.models.comps.head.MLPHead"
@@ -34,12 +32,12 @@ class MLPHeadConfig(TargetConfig):
 
 
 @dataclass
-class LitMNISTConfig(TargetConfig):
+class LitMNISTConfig:
     """Configuration for the LitMNIST model."""
 
+    encoder: Any
+    head: Any
     _target_: str = "configlab.models.mnist_modelmodule.LitMNIST"
-    encoder: Any = "${model.encoder}"
-    head: Any = "${model.head}"
 
 
 def register_model_configs() -> None:

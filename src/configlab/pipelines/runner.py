@@ -4,6 +4,7 @@ from typing import Any
 import lightning as L  # noqa: N812
 from omegaconf import DictConfig
 
+from configlab.data.data_prepare import mnist_prepare
 from configlab.utils.git_utils import snapshot_git_state
 
 from .build import build_callbacks, build_data_module, build_loggers, build_model_module, build_trainer
@@ -17,8 +18,11 @@ def run_pipeline(config: DictConfig) -> dict[str, Any]:
     # capture git info
     snapshot_git_state(output_dir=Path(config.paths.output_dir) / "git_snapshot", cwd=Path(config.paths.root_dir))
 
+    # data preparation
+    train, test = mnist_prepare(config.paths.data_dir)
+
     # data module
-    data_module = build_data_module(config)
+    data_module = build_data_module(config, train_dataset=train, test_dataset=test)
 
     # model module
     model_module = build_model_module(config)
