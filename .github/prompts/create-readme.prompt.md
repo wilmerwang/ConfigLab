@@ -1,6 +1,6 @@
 ---
-agent: 'agent'
-description: 'Create a comprehensive README.md file for the project'
+agent: agent
+description: Create a comprehensive README.md file for the project
 ---
 
 ## Role
@@ -37,6 +37,7 @@ You're a senior software engineer with extensive experience in open source proje
 ### What NOT to include
 
 Don't include:
+
 - Detailed API documentation (link to separate docs instead)
 - Extensive troubleshooting guides (use wikis or separate documentation)
 - License text (reference separate LICENSE file)

@@ -4,7 +4,6 @@ from typing import Any
 import lightning as L  # noqa: N812
 from omegaconf import DictConfig
 
-from configlab.data.data_prepare import mnist_prepare
 from configlab.utils.git_utils import snapshot_git_state
 
 from .build import build_callbacks, build_data_module, build_loggers, build_model_module, build_trainer

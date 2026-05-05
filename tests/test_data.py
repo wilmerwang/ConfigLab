@@ -10,6 +10,7 @@ def test_dataloaders(
     train_dataset: Dataset, test_dataset: Dataset, batch_size: int, batch_size_expected: int, loader_name: str
 ) -> None:
     """Test the dataloaders of the MNISTDataModule."""
+
     def data_prepare_func() -> tuple[Dataset, Dataset]:
         return train_dataset, test_dataset
 

@@ -34,15 +34,15 @@ overrides, not by rewriting your training script.
 ## Why It Is Useful
 
 - Reproducible experiments by design
-	- Hydra creates structured run directories and ConfigLab snapshots git state per run.
+  - Hydra creates structured run directories and ConfigLab snapshots git state per run.
 - Fast experimentation
-	- Swap encoder/logger/trainer choices via overrides like `encoder=mlp` or `logger=csv`.
+  - Swap encoder/logger/trainer choices via overrides like `encoder=mlp` or `logger=csv`.
 - Clear separation of concerns
-	- Data, model, training, and runtime settings live in dedicated config groups.
+  - Data, model, training, and runtime settings live in dedicated config groups.
 - Built-in workflow presets
-	- `task/train`, `task/test`, `task/predict`, debug presets, and Optuna sweeps are already scaffolded.
+  - `task/train`, `task/test`, `task/predict`, debug presets, and Optuna sweeps are already scaffolded.
 - Contributor-friendly codebase
-	- Tests cover config composition, data loaders, model components, and utility helpers.
+  - Tests cover config composition, data loaders, model components, and utility helpers.
 
 ## How To Get Started
 
@@ -148,8 +148,8 @@ logs/               # Generated experiment outputs
 - Open an issue in this repository for bugs or feature requests.
 - Check [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), and the config presets under [configs](configs/) for expected usage.
 - For framework references used by this project:
-	- Hydra: <https://hydra.cc/docs/intro/>
-	- PyTorch Lightning: <https://lightning.ai/docs/pytorch/stable/>
+  - Hydra: <https://hydra.cc/docs/intro/>
+  - PyTorch Lightning: <https://lightning.ai/docs/pytorch/stable/>
 
 ## Who Maintains and Contributes
 
