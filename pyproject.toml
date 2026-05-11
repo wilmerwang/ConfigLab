@@ -7,13 +7,17 @@ requires-python = ">=3.13"
 dependencies = [
     "hydra-colorlog>=1.2.0",
     "hydra-core>=1.3.2",
-    "hydra-optuna-sweeper>=1.2.0",
     "jaxtyping>=0.3.9",
     "lightning>=2.6.1",
-    "optuna>=2.10.1",
     "rich>=15.0.0",
     "torch>=2.11.0",
     "torchvision>=0.26.0",
+]
+
+[project.optional-dependencies]
+optuna = [
+    "hydra-optuna-sweeper==1.2.0",
+    "sqlalchemy==1.4.46",
 ]
 
 [build-system]
@@ -22,15 +26,22 @@ build-backend = "uv_build"
 
 [tool.uv.sources]
 torch = [
-  { index = "pytorch-cpu" },
+  { index = "pytorch-cpu", marker = "sys_platform != 'linux'" },
+  { index = "pytorch-cuda", marker = "sys_platform == 'linux'" },
 ]
 torchvision = [
-  { index = "pytorch-cpu" },
+  { index = "pytorch-cpu", marker = "sys_platform != 'linux'" },
+  { index = "pytorch-cuda", marker = "sys_platform == 'linux'" },
 ]
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cuda"
+url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
 [tool.commitizen]

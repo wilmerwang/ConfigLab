@@ -89,7 +89,12 @@ class LitMNIST(LightningModule):
         epoch_metrics = self.val_metrics_tracker.compute()
         best_merics = self.val_metrics_tracker.best_metric()
         self.log_dict(epoch_metrics, on_epoch=True, prog_bar=True, logger=True)
-        self.log_dict({f"val/best_{k}": v for k, v in best_merics.items()}, on_epoch=True, prog_bar=True, logger=True)
+        self.log_dict(
+            {"/best/".join(k.rsplit("/", 1)): v for k, v in best_merics.items()},
+            on_epoch=True,
+            prog_bar=True,
+            logger=True,
+        )
 
     def test_step(self, batch: tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Perform a single test step on a batch of data from the test set."""

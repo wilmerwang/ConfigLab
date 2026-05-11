@@ -6,6 +6,9 @@ root_dir: ${oc.env:PROJECT_ROOT, "."}
 # path to data directory
 data_dir: ${.root_dir}/data
 
+# cache directory to store temporary files, like downloaded datasets and pretrained models
+cache_dir: ${.root_dir}/cache
+
 # path to logging directory
 log_dir: ${.root_dir}/logs
 

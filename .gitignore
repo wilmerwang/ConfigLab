@@ -1,4 +1,5 @@
 # Custom files
+/cache/
 /data/
 /logs/
 
