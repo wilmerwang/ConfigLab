@@ -1,5 +1,8 @@
 # @package _global_
 
+defaults:
+  - override /trainer: gpu
+
 task_name: predict
 
 train: false

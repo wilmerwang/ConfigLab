@@ -105,6 +105,17 @@ class LitMNIST(LightningModule):
         self.test_metrics.update(logits, labels.int())
         self.log_dict(self.test_metrics, on_step=False, on_epoch=True, prog_bar=True, logger=True)
 
+    def predict_step(self, batch: tuple[Tensor, Tensor], batch_idx: int) -> None:
+        """Perform a single predict step on a batch of data from the test set."""
+        data, labels = batch
+        logits = self(data)
+
+        # return logits and labels for later evaluation
+        return {
+            "logits": logits,
+            "labels": labels,
+        }
+
     def configure_optimizers(self) -> torch.optim.Optimizer:
         """Configure optimizers."""
         optimizer = Adam(self.parameters(), lr=1e-3)

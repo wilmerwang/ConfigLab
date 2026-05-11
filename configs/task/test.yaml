@@ -1,9 +1,12 @@
 # @package _global_
 
+defaults:
+  - override /trainer: gpu
+
 task_name: test
 
 train: false
 test: true
 predict: false
 
-ckpt_path: "logs/train/runs/2026-05-01_16-26-07/checkpoints/4-530.ckpt"
+ckpt_path: null

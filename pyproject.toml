@@ -106,6 +106,9 @@ recursive = true
 wrap-summaries=120
 wrap-descriptions=120
 
+[tool.pytest.ini_options]
+addopts = "-p no:warnings"
+
 [dependency-groups]
 dev = [
     "pytest>=9.0.3",
