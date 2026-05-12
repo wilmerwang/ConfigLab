@@ -1,9 +1,11 @@
+from collections.abc import Callable
+
 import torch
 from lightning import LightningModule
 from torch import Tensor
 from torch.nn import functional as F  # noqa: N812
-from torch.optim import Adam
-from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import LRScheduler
 from torchmetrics import MeanMetric, MetricCollection, MetricTracker
 from torchmetrics.classification import (
     AUROC,
@@ -22,6 +24,8 @@ class LitMNIST(LightningModule):
         self,
         encoder: EncoderProto,
         head: HeadProto,
+        optimizer_factory: Callable[..., Optimizer],
+        scheduler_factory: Callable[..., LRScheduler],
     ) -> None:
         """Initialize a `LitMNIST` module."""
         super().__init__()
@@ -118,7 +122,7 @@ class LitMNIST(LightningModule):
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
         """Configure optimizers."""
-        optimizer = Adam(self.parameters(), lr=1e-3)
-        scheduler = ReduceLROnPlateau(optimizer, mode="max", factor=0.5, patience=3, min_lr=1e-6)
+        optimizer = self.hparams.optimizer_factory(params=self.parameters())
+        scheduler = self.hparams.scheduler_factory(optimizer=optimizer)
         lr_scheduler = {"scheduler": scheduler, "monitor": "val/aupr", "interval": "epoch", "frequency": 1}
         return {"optimizer": optimizer, "lr_scheduler": lr_scheduler}

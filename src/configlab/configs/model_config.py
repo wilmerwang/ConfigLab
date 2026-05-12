@@ -32,11 +32,37 @@ class MLPHeadConfig:
 
 
 @dataclass
+class AdamOptimizerConfig:
+    """Configuration for the Adam optimizer."""
+
+    _target_: str = "torch.optim.Adam"
+    _partial_: bool = True
+    lr: float = 1e-3
+    weight_decay: float = 0.0
+
+
+@dataclass
+class ReduceLROnPlateauSchedulerConfig:
+    """Configuration for the ReduceLROnPlateau scheduler."""
+
+    _target_: str = "torch.optim.lr_scheduler.ReduceLROnPlateau"
+    _partial_: bool = True
+    mode: str = "max"
+    factor: float = 0.5
+    patience: int = 3
+    min_lr: float = 1e-6
+
+
+@dataclass
 class LitMNISTConfig:
     """Configuration for the LitMNIST model."""
 
     encoder: Any
     head: Any
+    # Mostly fixed; only lr and similar parameters are exposed for hyperparameter search.
+    optimizer_factory: Any = AdamOptimizerConfig
+    # move optimizer and scheduler out of model for hyperparameter tuning
+    scheduler_factory: Any = ReduceLROnPlateauSchedulerConfig
     _target_: str = "configlab.models.mnist_modelmodule.LitMNIST"
 
 

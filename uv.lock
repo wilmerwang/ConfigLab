@@ -232,7 +232,6 @@ requires-dist = [
     { name = "torchvision", marker = "sys_platform != 'linux'", specifier = ">=0.26.0", index = "https://download.pytorch.org/whl/cpu" },
     { name = "torchvision", marker = "sys_platform == 'linux'", specifier = ">=0.26.0", index = "https://download.pytorch.org/whl/cu126" },
 ]
-provides-extras = ["optuna"]
 
 [package.metadata.requires-dev]
 dev = [
