@@ -2,7 +2,7 @@
 
 ### Feat
 
-- Add git snapshot when runing
+- Add git snapshot when running
 
 ### Fix
 
