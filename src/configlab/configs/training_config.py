@@ -184,12 +184,24 @@ class GPUTrainerConfig(BaseTrainerConfig):
     devices: int = 1
 
 
+@dataclass
+class DDPTrainerConfig(BaseTrainerConfig):
+    """DDP trainer config."""
+
+    accelerator: str = "gpu"
+    devices: int = 2  # use all available GPUs
+    strategy: str = "ddp"
+    num_nodes: int = 1
+    sync_batchnorm: bool = True
+
+
 def register_trainers() -> None:
     """Register trainers in the config."""
     cs = ConfigStore.instance()
     cs.store(group="trainer", name="default", node=BaseTrainerConfig)
     cs.store(group="trainer", name="cpu", node=CPUTrainerConfig)
     cs.store(group="trainer", name="gpu", node=GPUTrainerConfig)
+    cs.store(group="trainer", name="ddp", node=DDPTrainerConfig)
 
 
 # register all configs

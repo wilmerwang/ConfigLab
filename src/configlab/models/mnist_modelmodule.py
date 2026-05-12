@@ -34,6 +34,11 @@ class LitMNIST(LightningModule):
         self.save_hyperparameters(logger=False, ignore=["encoder", "head"])
         self._init_metrics()
 
+    def setup(self, stage: str) -> None:
+        """Setup the model for the current stage."""
+        # move encoder and head to the correct device
+        self.sync_dist = self.trainer.num_devices > 1
+
     def _init_metrics(self) -> None:
         # loss metrics
         self.train_loss = MeanMetric()
@@ -70,7 +75,15 @@ class LitMNIST(LightningModule):
 
         # update and log metrics
         self.train_loss(loss)
-        self.log("train/loss", self.train_loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        self.log(
+            "train/loss",
+            self.train_loss,
+            on_step=True,
+            on_epoch=True,
+            prog_bar=True,
+            logger=True,
+            sync_dist=self.sync_dist,
+        )
         return loss
 
     def on_validation_epoch_start(self) -> None:
@@ -87,17 +100,20 @@ class LitMNIST(LightningModule):
 
     def on_validation_epoch_end(self) -> None:
         """Log the validation metrics at the end of each validation epoch."""
-        self.log("val/loss", self.val_loss.compute(), on_epoch=True, prog_bar=True, logger=True)
+        self.log(
+            "val/loss", self.val_loss.compute(), on_epoch=True, prog_bar=True, logger=True, sync_dist=self.sync_dist
+        )
         self.val_loss.reset()
 
         epoch_metrics = self.val_metrics_tracker.compute()
         best_merics = self.val_metrics_tracker.best_metric()
-        self.log_dict(epoch_metrics, on_epoch=True, prog_bar=True, logger=True)
+        self.log_dict(epoch_metrics, on_epoch=True, prog_bar=True, logger=True, sync_dist=self.sync_dist)
         self.log_dict(
             {"/best/".join(k.rsplit("/", 1)): v for k, v in best_merics.items()},
             on_epoch=True,
             prog_bar=True,
             logger=True,
+            sync_dist=self.sync_dist,
         )
 
     def test_step(self, batch: tuple[Tensor, Tensor], batch_idx: int) -> None:
@@ -107,7 +123,9 @@ class LitMNIST(LightningModule):
 
         # update and log metrics
         self.test_metrics.update(logits, labels.int())
-        self.log_dict(self.test_metrics, on_step=False, on_epoch=True, prog_bar=True, logger=True)
+        self.log_dict(
+            self.test_metrics, on_step=False, on_epoch=True, prog_bar=True, logger=True, sync_dist=self.sync_dist
+        )
 
     def predict_step(self, batch: tuple[Tensor, Tensor], batch_idx: int) -> None:
         """Perform a single predict step on a batch of data from the test set."""

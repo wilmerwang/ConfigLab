@@ -2,12 +2,12 @@
 
 defaults:
   - override /logger: csv
-  - override /trainer: gpu
+  - override /trainer: ddp
 
 task_name: train
 
 train: true
-test: true
+test: false
 predict: false
 
 trainer:
