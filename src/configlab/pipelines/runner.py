@@ -6,6 +6,7 @@ from omegaconf import DictConfig
 
 from configlab.data.data_prepare import mnist_prepare
 from configlab.utils.git_utils import snapshot_git_state
+from configlab.utils.rich_utils import console
 
 from .build import build_callbacks, build_data_module, build_loggers, build_model_module, build_trainer
 
@@ -43,7 +44,7 @@ def run_pipeline(config: DictConfig) -> dict[str, Any]:
                 model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
             )
             results["train_metrics"] = trainer.callback_metrics
-            config.ckpt_path = trainer.checkpoint_callback.best_model_path
+            console.print(f"Best model checkpoint saved at: {trainer.checkpoint_callback.best_model_path}")
         case "test":
             trainer.test(
                 model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
