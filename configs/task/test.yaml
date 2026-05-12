@@ -5,8 +5,6 @@ defaults:
 
 task_name: test
 
-train: false
-test: true
-predict: false
+mode: test
 
 ckpt_path: null

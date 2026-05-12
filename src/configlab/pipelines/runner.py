@@ -37,17 +37,24 @@ def run_pipeline(config: DictConfig) -> dict[str, Any]:
     # run
     results = {}
 
-    if config.train:
-        trainer.fit(model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False)
-        results["train_metrics"] = trainer.callback_metrics
-        config.ckpt_path = trainer.checkpoint_callback.best_model_path
-    if config.test:
-        trainer.test(model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False)
-        results["test_metrics"] = trainer.callback_metrics
-    if config.predict:
-        output = trainer.predict(
-            model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
-        )
-        results["predict_output"] = output
+    match config.mode:
+        case "train":
+            trainer.fit(
+                model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
+            )
+            results["train_metrics"] = trainer.callback_metrics
+            config.ckpt_path = trainer.checkpoint_callback.best_model_path
+        case "test":
+            trainer.test(
+                model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
+            )
+            results["test_metrics"] = trainer.callback_metrics
+        case "predict":
+            output = trainer.predict(
+                model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
+            )
+            results["predict_output"] = output
+        case _:
+            raise ValueError(f"Unknown mode: {config.mode}")
 
     return results

@@ -6,9 +6,7 @@ defaults:
 
 task_name: train
 
-train: true
-test: false
-predict: false
+mode: train
 
 trainer:
   max_epochs: 5

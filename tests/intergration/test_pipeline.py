@@ -61,16 +61,6 @@ def test_test(cfg: DictConfig) -> None:
 
 
 @pytest.mark.slow
-def test_train_and_test(cfg: DictConfig) -> None:
-    """Test the training and testing pipeline."""
-    config = cfg(["task=train", "test=true"])
-    results = run_pipeline(config)
-
-    assert "train_metrics" in results
-    assert "test_metrics" in results
-
-
-@pytest.mark.slow
 def test_predict(cfg: DictConfig) -> None:
     """Test the prediction pipeline."""
     config = cfg(["task=predict"])

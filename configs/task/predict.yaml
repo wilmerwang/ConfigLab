@@ -5,8 +5,6 @@ defaults:
 
 task_name: predict
 
-train: false
-test: false
-predict: true
+mode: predict
 
 ckpt_path: null

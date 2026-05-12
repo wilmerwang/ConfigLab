@@ -20,9 +20,7 @@ defaults:
 task_name: "train"
 tags: ["dev"]
 
-train: false
-test: false
-predict: false
+mode: ???
 
 ckpt_path: null
 seed: 68
