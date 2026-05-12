@@ -5,19 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "hydra-colorlog>=1.2.0",
-    "hydra-core>=1.3.2",
+    "hydra-core",
+    "hydra-optuna-sweeper",
     "jaxtyping>=0.3.9",
     "lightning>=2.6.1",
     "rich>=15.0.0",
     "torch>=2.11.0",
     "torchvision>=0.26.0",
-]
-
-[project.optional-dependencies]
-optuna = [
-    "hydra-optuna-sweeper==1.2.0",
-    "sqlalchemy==1.4.46",
 ]
 
 [build-system]
@@ -33,6 +27,8 @@ torchvision = [
   { index = "pytorch-cpu", marker = "sys_platform != 'linux'" },
   { index = "pytorch-cuda", marker = "sys_platform == 'linux'" },
 ]
+hydra-core = { git = "https://github.com/facebookresearch/hydra.git", rev = "dd0b2f64365449bfca2cc920bf2a222949135a98" }
+hydra-optuna-sweeper = { git = "https://github.com/facebookresearch/hydra.git", subdirectory = "plugins/hydra_optuna_sweeper", rev = "dd0b2f64365449bfca2cc920bf2a222949135a98" }
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
