@@ -107,6 +107,7 @@ addopts = "-p no:warnings"
 
 [dependency-groups]
 dev = [
+    "pandas>=3.0.3",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
 ]
