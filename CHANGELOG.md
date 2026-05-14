@@ -1,3 +1,19 @@
+## v0.3.1 (2026-05-14)
+
+### Feat
+
+- add rich console in rank_zero_only
+- add DDP support and its config
+
+### Fix
+
+- fix setup function of lightning datamodule; fix drop behavior when model validation
+- correct spelling mistakes
+
+### Refactor
+
+- use match-case for mode dispatching
+
 ## v0.3.0 (2026-05-12)
 
 ### Feat
