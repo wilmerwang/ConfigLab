@@ -361,12 +361,22 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="实验结果辅助工具")
     parser.add_argument("--task_dir", type=str, required=True, help="任务目录, 例如 train/test/predict")
-    parser.add_argument("--task", type=str, choices=["train", "test", "predict"], required=True)
+    parser.add_argument("--task", type=str, choices=["train", "test", "predict"], help="任务类型")
     parser.add_argument("--clean_failed", action="store_true", help="清理失败实验")
     args = parser.parse_args()
 
+    if not args.task_dir:
+        console.print("[red]请提供有效的任务目录[/red]")
+        exit(1)
+
     if args.clean_failed:
         clean_failed_runs(args.task_dir, dry_run=False)
+
+    if not args.task:
+        if not args.clean_failed:
+            console.print("[red]请提供有效的任务类型或者清理失败实验[/red]")
+            exit(1)
+        exit(0)
 
     # 根据任务选择列配置
     if args.task == "train":
