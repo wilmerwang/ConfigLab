@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Any
 
 import lightning as L  # noqa: N812
+import torch
 from omegaconf import DictConfig
 
 from configlab.data.data_prepare import mnist_prepare
@@ -55,6 +56,8 @@ def run_pipeline(config: DictConfig) -> dict[str, Any]:
                 model=model_module, datamodule=data_module, ckpt_path=config.get("ckpt_path"), weights_only=False
             )
             results["predict_output"] = output
+            torch.save(output, Path(config.paths.output_dir) / "output_predict.pt")
+            console.print(f"Predict output saved at: {config.paths.output_dir}/output_predict.pt")
         case _:
             raise ValueError(f"Unknown mode: {config.mode}")
 
