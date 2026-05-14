@@ -2,6 +2,7 @@
 
 defaults:
   - override /trainer: gpu
+  - override /logger: csv
 
 task_name: test
 
