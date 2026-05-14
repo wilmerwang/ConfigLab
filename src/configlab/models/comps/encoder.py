@@ -11,6 +11,7 @@ class CNNEncoder(nn.Module):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 32, 4, 2)
         self.conv2 = nn.Conv2d(32, 64, 4, 1)
+        self.dropout = nn.Dropout(p=0.2)
         self.fc = nn.Linear(64 * 5 * 5, output_dim)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -18,7 +19,7 @@ class CNNEncoder(nn.Module):
         x = F.relu(self.conv1(x))
         x = F.relu(self.conv2(x))
         x = F.max_pool2d(x, 2)
-        x = F.dropout(x, p=0.2)
+        x = self.dropout(x)
         x = torch.flatten(x, 1)
         return self.fc(x)
 
@@ -30,6 +31,7 @@ class MLPEncoder(nn.Module):
         """A simple MLP encoder for tabular data."""
         super().__init__()
         self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.dropout = nn.Dropout(p=0.2)
         self.fc2 = nn.Linear(hidden_dim, output_dim)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -37,6 +39,6 @@ class MLPEncoder(nn.Module):
         x = torch.flatten(x, 1)
 
         x = F.relu(self.fc1(x))
-        x = F.dropout(x, p=0.2)
+        x = self.dropout(x)
 
         return self.fc2(x)

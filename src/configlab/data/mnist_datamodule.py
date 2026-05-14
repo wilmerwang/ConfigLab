@@ -1,4 +1,5 @@
 from lightning import LightningDataModule
+from torch import Generator
 from torch.utils.data import DataLoader, Dataset, random_split
 
 
@@ -13,15 +14,19 @@ class MNISTDataModule(LightningDataModule):
         num_workers: int = 0,
         pin_memory: bool = False,
         persistent_workers: bool = False,
+        split_seed: int = 42,
     ) -> None:
         """Initialize the MNISTDataModule with the given datasets and parameters."""
         super().__init__()
-        self.train_dataset = train_dataset
+        self.full_train_dataset = train_dataset
+        self.train_dataset: Dataset | None = None
+        self.val_dataset: Dataset | None = None
         self.test_dataset = test_dataset
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.pin_memory = pin_memory
         self.persistent_workers = persistent_workers
+        self.split_seed = split_seed
 
     @property
     def num_classes(self) -> int:
@@ -30,11 +35,15 @@ class MNISTDataModule(LightningDataModule):
 
     def setup(self, stage: str | None = None) -> None:
         """Setup the datasets for training and testing."""
-        # No additional setup is needed since the datasets are already prepared
-        num_train_samples = len(self.train_dataset)
+        if self.train_dataset is not None and self.val_dataset is not None:
+            return
+
+        num_train_samples = len(self.full_train_dataset)
         num_val_samples = int(0.1 * num_train_samples)
         self.train_dataset, self.val_dataset = random_split(
-            self.train_dataset, [num_train_samples - num_val_samples, num_val_samples]
+            self.full_train_dataset,
+            [num_train_samples - num_val_samples, num_val_samples],
+            generator=Generator().manual_seed(self.split_seed),
         )
 
     def train_dataloader(self) -> DataLoader:

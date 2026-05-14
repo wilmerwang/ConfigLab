@@ -26,3 +26,17 @@ def test_dataloaders(
         assert y.max() < 10
 
     _check_loader(loader)
+
+
+def test_setup_is_idempotent(train_dataset: Dataset, test_dataset: Dataset) -> None:
+    """Test repeated setup calls do not split the train dataset again."""
+    dm = MNISTDataModule(train_dataset, test_dataset, batch_size=16, num_workers=0, pin_memory=False)
+
+    dm.setup()
+    train_len = len(dm.train_dataset)
+    val_len = len(dm.val_dataset)
+
+    dm.setup()
+
+    assert len(dm.train_dataset) == train_len
+    assert len(dm.val_dataset) == val_len
